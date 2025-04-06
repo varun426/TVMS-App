@@ -10,8 +10,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="" element={<Tiles/>}></Route>
-        <Route path="/vehicle-regulate" element={<Tiles/>}></Route>
-        <Route path="/vehicle-regulate1" element={<VehicleRegulationCheck />} />
+        {/* <Route path="/vehicle-regulate" element={<Tiles/>}></Route> */}
+        <Route path="/vehicle-regulate" element={<VehicleRegulationCheck />} />
       </Routes>
     </BrowserRouter>
   );
