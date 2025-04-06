@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./VehicleRegulationCheck.css";
 import axios from "axios";
 import NavigationBar from './../NavBar/NavigationBar';
-import NavigationBar from './../NavBar/NavigationBar';
 
 const VehicleRegulationCheck = () => {
   const [vehicleNumber, setVehicleNumber] = useState("");
@@ -62,7 +61,6 @@ const VehicleRegulationCheck = () => {
       setError(null);
     } catch (err) {
       setError("Failed to fetch vehicle information.");
-      setError("Failed to fetch vehicle information.");
       setRuleInfo(null);
       setIsAllowedToday(null);
       setIsAllowedToday(null);
@@ -70,21 +68,6 @@ const VehicleRegulationCheck = () => {
   };
 
   return (
-    <>
-      <NavigationBar />
-      <div className="check-container">
-        <h2>Vehicle Regulation Check</h2>
-        <p>Enter your vehicle number to check if you are allowed to drive today based on the odd/even rule.</p>
-
-        <div className="input-section">
-          <input
-            type="text"
-            placeholder="Enter Vehicle Number"
-            value={vehicleNumber}
-            onChange={(e) => setVehicleNumber(e.target.value)}
-          />
-          <button className="btn btn-danger" onClick={handleCheck}>Check</button>
-        </div>
     <>
       <NavigationBar />
       <div className="check-container">
@@ -143,11 +126,6 @@ const VehicleRegulationCheck = () => {
         )}
   
 
-        {error && (
-          <div className="error-text">{error}</div>
-        )}
-      </div>
-    </>
         {error && (
           <div className="error-text">{error}</div>
         )}
