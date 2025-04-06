@@ -1,8 +1,10 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./navigationBar.css";
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
   return (
     <div className="navbar">
       <img src="/assets/log_v1-removebg-preview.png" alt="TVMS Logo" className="logo" />
@@ -19,6 +21,9 @@ const NavigationBar = () => {
         <li>
           <NavLink to="/traffic" className={({ isActive }) => isActive ? "active-link" : ""}>Traffic Monitoring</NavLink>
         </li>
+        <li>Parking Management</li>
+        <li onClick={() => navigate("/vehicle-regulation")}>Vehicle Regulation</li>
+        <li>Traffic Monitoring</li>
       </ul>
     </div>
   );

@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import VehicleRegulationCheck from './components/VehicleRegulationCheck/VehicleRegulationCheck';
 import Tiles from './components/Tiles/Tiles';
-import VehicleRegulationCheck from './components/VehicleRegulationCheck';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BookSlot from './components/BookSlot/BookSlot';
 
@@ -11,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/parking-management" element={<Tiles />}></Route>
-        <Route path="/vehicle-regulate" element={<VehicleRegulationCheck />} />
+        <Route path="/vehicle-regulation" element={<VehicleRegulationCheck />} />
         <Route path="/available" element={<BookSlot />} />
       </Routes>
     </BrowserRouter>
