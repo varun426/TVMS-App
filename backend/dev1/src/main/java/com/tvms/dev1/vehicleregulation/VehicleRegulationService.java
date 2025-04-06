@@ -18,9 +18,15 @@ class VehicleRegulationService {
             DayOfWeek.SATURDAY, false,
             DayOfWeek.SUNDAY, true);
 
-    private VehicleRegulationRepository restrictionRepository;
+    private VehicleRegulationRepository vehicleRegulationRepository;
 
     private IncidentRepository incidentRepository;
+
+    public VehicleRegulationService(VehicleRegulationRepository vehicleRegulationRepository,
+                                    IncidentRepository incidentRepository) {
+        this.vehicleRegulationRepository = vehicleRegulationRepository;
+        this.incidentRepository = incidentRepository;
+    }
 
     // Even/Odd Vehicle Rule Feature
     public boolean isVehicleAllowed(String vehicleNumber) {
@@ -52,7 +58,7 @@ class VehicleRegulationService {
     // }
 
     public List<VehicleRegulation> getVehicleInformation(String vehicleNumber) {
-        return restrictionRepository.findByVehicleNumber(vehicleNumber);
+        return vehicleRegulationRepository.findByVehicleNumber(vehicleNumber);
     }
 
     public List<Incidents> getIncidents(String vehicleNumber) {
