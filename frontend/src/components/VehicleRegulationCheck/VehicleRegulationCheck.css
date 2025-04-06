@@ -1,0 +1,29 @@
+.regulation-container {
+    background-color: #f8d7da;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: 60px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .rule-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 5px solid red;
+    color: #333;
+  }
+  
+  .rule-box strong {
+    color: red;
+    font-size: 1.2em;
+  }
+  

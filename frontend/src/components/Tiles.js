@@ -24,7 +24,7 @@ const content = [
 const Tiles = () => {
     const navigate = useNavigate(); 
     const checkAvailability=()=>{
-        navigate('/vehicle-regulate');
+        navigate('/vehicle-regulate1');
     }
     return <div className="outer-div">
         <div className="inner-div">
