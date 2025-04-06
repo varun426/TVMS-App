@@ -24,8 +24,14 @@ const content = [
 
 const Tiles = () => {
     const navigate = useNavigate();
-    const checkAvailability = () => {
-        navigate('/available');
+    const checkAvailability = (lotName) => {
+        lotName = lotName.replace(" ", "_");
+        navigate('/available',
+            {
+                state: {
+                    lotName: lotName
+                }
+            });
     };
     return (
         <>
@@ -38,8 +44,8 @@ const Tiles = () => {
                             <span className="span">{item.text}</span>
                             <button
                                 type="button"
-                                class="btn btn-danger"
-                                onClick={checkAvailability}
+                                className="btn btn-danger"
+                                onClick={()=> checkAvailability(item.text)}
                             >
                                 Check Availability
                             </button>
