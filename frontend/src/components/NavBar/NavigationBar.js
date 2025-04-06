@@ -1,19 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import "./navigationBar.css";
-import logolight from "../../Assets/logo.png";
 
 const NavigationBar = () => {
   return (
     <div className="navbar">
-      <img src={logolight} alt="" className="logo"></img>
-      <ul>
+      <img src="/assets/logo.png" alt="TVMS Logo" className="logo" />
+      <ul className="navItems">
         <li>
-          <a href="http://localhost:3000/"></a>Dashboard
+          <NavLink to="https://www.youtube.com/watch?v=m55PTVUrlnA" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink>
         </li>
-        <li>Parking Management</li>
-        <li>Vehicle Regulation</li>
-        <li>Traffic Monitoring</li>
+        <li>
+          <NavLink to="/parking" className={({ isActive }) => isActive ? "active-link" : ""}>Parking Management</NavLink>
+        </li>
+        <li>
+          <NavLink to="/vehicle" className={({ isActive }) => isActive ? "active-link" : ""}>Vehicle Regulation</NavLink>
+        </li>
+        <li>
+          <NavLink to="/traffic" className={({ isActive }) => isActive ? "active-link" : ""}>Traffic Monitoring</NavLink>
+        </li>
       </ul>
     </div>
   );

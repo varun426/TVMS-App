@@ -58,3 +58,13 @@ INSERT INTO TRAFFIC_DATA (location, congestionLevel, timestamp, fasttagAmount) V
 ('Mehdipatnam', 'Low', '2025-04-01T22:30:09.432', 22.10),
 ('Begumpet', 'High', '2025-04-01T08:45:48.120', 62.40),
 ('Begumpet', 'Medium', '2025-04-01T13:45:29.786', 48.20);
+
+INSERT INTO `tvms_dbmysql`.`vehicle_regulation`
+(`fast_tag_amount`, `penalty_amount`, `vehicle_number`, `violation_time`, `violation_type`)
+VALUES
+(200, 500, 'TS09AB1234', '2025-04-01 08:30:07', 'Over Speeding'),
+(150, 300, 'TS10XY5678', '2025-04-01 09:15:22', 'Signal Jumping'),
+(100, 200, 'TS07GH2468', '2025-04-01 10:45:50', 'Wrong Parking'),
+(250, 700, 'TS05CD7890', '2025-04-01 12:05:30', 'No Helmet'),
+(180, 400, 'TS11EF1357', '2025-04-01 14:20:15', 'Lane Violation');
+
