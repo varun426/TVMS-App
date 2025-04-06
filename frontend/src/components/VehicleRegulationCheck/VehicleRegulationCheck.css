@@ -118,5 +118,38 @@
     color: #333333;
   }
   
+  .penalty-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff; /* ✅ white background */
+    font-family: 'Segoe UI', sans-serif;
+  }
   
+  .penalty-table thead {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  .penalty-table th,
+  .penalty-table td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #ffffff; /* ✅ ensure white background for all cells */
+  }
+  
+  .penalty-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .fasttag-balance {
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+  }
   
