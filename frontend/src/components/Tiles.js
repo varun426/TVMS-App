@@ -1,37 +1,42 @@
 import React from "react";
+import './tiles.css';
+import { Navigate, useNavigate } from "react-router-dom";
 
 const content = [
     {
-        src: 'https://demos.telerik.com/kendo-ui/content/web/cards/barcelona.jpg',
-        text: 'Barcelona',
+        src: 'assets/nexus.png',
+        text: 'Nexus Mall',
     },
     {
-        src: 'https://demos.telerik.com/kendo-ui/content/web/cards/rome.jpg',
-        text: 'Rome',
+        src: 'assets/amb.png',
+        text: 'Sarath City Capital Mall',
     },
     {
-        src: 'https://demos.telerik.com/kendo-ui/content/web/cards/sanfran.jpg',
-        text: 'San Francisco',
+        src: 'assets/continental.png',
+        text: 'Continental Hospitals',
+    },
+    {
+        src: 'assets/inorbit.png',
+        text: 'Inorbit Mall',
     },
 ];
 
 const Tiles = () => {
-    return <div style={{
-        paddingTop: "150px",
-        maxWidth: 1000,
-        marginLeft:"auto", 
-        marginRight: "auto"
-    }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', padding: '10px', gap: '10px' }}>
+    const navigate = useNavigate(); 
+    const checkAvailability=()=>{
+        navigate('/vehicle-regulate');
+    }
+    return <div className="outer-div">
+        <div className="inner-div">
             {content.map((item, index) => (
-                <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div key={index} className="tile">
                     <img
                         src={item.src}
                         alt={item.text}
-                        style={{ height: 'auto' }}
+                        className="image"
                     />
-                    <span style={{ padding: 10 }}>{item.text}</span>
-                    <button type="button" class="btn btn-danger">Check Availability</button>
+                    <span className="span">{item.text}</span>
+                    <button type="button" class="btn btn-danger" onClick={checkAvailability}>Check Availability</button>
                 </div>
             ))}
         </div>

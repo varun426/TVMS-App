@@ -9,6 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="" element={<Tiles/>}></Route>
+        <Route path="/vehicle-regulate" element={<Tiles/>}></Route>
       </Routes>
     </BrowserRouter>
   );
