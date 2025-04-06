@@ -41,8 +41,11 @@
   }
   
   .active-link {
-    background-color: #ff5252; /* Bright Red for Selected Item */
+    background-color: #651c1c; /* Bright Red for Selected Item */
     border-radius: 5px;
     font-weight: bold;
   }
-  
+
+  .logo{
+    padding-left: 10px;
+  }

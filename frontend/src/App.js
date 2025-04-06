@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Tiles />}></Route>
+        <Route path="/parking-management" element={<Tiles />}></Route>
         <Route path="/vehicle-regulate" element={<VehicleRegulationCheck />} />
         <Route path="/available" element={<BookSlot />} />
       </Routes>
