@@ -21,9 +21,7 @@ const NavigationBar = () => {
         <li>
           <NavLink to="/traffic" className={({ isActive }) => isActive ? "active-link" : ""}>Traffic Monitoring</NavLink>
         </li>
-        <li>Parking Management</li>
-        <li onClick={() => navigate("/vehicle-regulation")}>Vehicle Regulation</li>
-        <li>Traffic Monitoring</li>
+        
       </ul>
     </div>
   );
