@@ -16,7 +16,7 @@ const NavigationBar = () => {
           <NavLink to="/parking-management" className={({ isActive }) => isActive ? "active-link" : ""}>Parking Management</NavLink>
         </li>
         <li>
-          <NavLink to="/vehicle-regulate" className={({ isActive }) => isActive ? "active-link" : ""}>Vehicle Regulation</NavLink>
+          <NavLink to="/vehicle-regulation" className={({ isActive }) => isActive ? "active-link" : ""}>Vehicle Regulation</NavLink>
         </li>
         <li>
           <NavLink to="/traffic" className={({ isActive }) => isActive ? "active-link" : ""}>Traffic Monitoring</NavLink>
