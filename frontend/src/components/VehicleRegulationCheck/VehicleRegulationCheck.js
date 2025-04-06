@@ -13,8 +13,8 @@ const VehicleRegulationCheck = () => {
 
 
   const getTodayRule = () => {
-    const day = new Date().getDay(); 
-    const evenDays = [0, 2, 4, 6]; 
+    const day = new Date().getDay();
+    const evenDays = [0, 2, 4, 6];
 
     if (evenDays.includes(day)) return "even";
     return "odd";
@@ -79,7 +79,12 @@ const VehicleRegulationCheck = () => {
             type="text"
             placeholder="Enter Vehicle Number"
             value={vehicleNumber}
-            onChange={(e) => setVehicleNumber(e.target.value)}
+            onChange={(e) => {
+              setVehicleNumber(e.target.value); 
+              setPenalties([]);
+              setTodayRule("");
+              setIsAllowedToday(null);
+            }}
           />
           <button className="btn btn-danger" onClick={handleCheck}>Check</button>
         </div>
@@ -124,7 +129,7 @@ const VehicleRegulationCheck = () => {
             <p className="fasttag-balance">FastTag Balance: ₹{penalties[penalties.length - 1].fastTagAmount}</p>
           </div>
         )}
-  
+
 
         {error && (
           <div className="error-text">{error}</div>
