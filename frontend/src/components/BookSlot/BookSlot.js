@@ -5,19 +5,26 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const BookSlot = () => {
-    let availableSlots = [1, 2, 3, 4, 5, 7, 9, 10];
     const location = useLocation();
     const { lotName } = location.state || {};
     const [slotSelected, setSlotSelected] = useState(null);
     const [error, setErrorMessage] = useState('');
+    const [availableSlots, setAvailableslots]= useState([1,2]);
     useEffect(() => {
         console.log("LOTNNAME", lotName);
-        axios.get(`http://localhost:8080/parking/available?lotName=${lotName}`).then((res) => {
-            console.log(res);
+        axios.get(`/parking/available?lotName=${lotName}`, {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+
+            },
+        }).then((res) => {
+            setAvailableslots(res.data);
         }).catch((err) => {
             console.log("No Slots available", err);
-        })
-    })
+        });
+        console.log("ajhajkaa", availableSlots);
+    }, [slotSelected])
 
     const handleBooking = () => {
         console.log("handleBooking called");
@@ -25,7 +32,7 @@ const BookSlot = () => {
             console.log("slotttt", slotSelected);
         }
         console.log(slotSelected);
-        axios.put(`http://localhost:8080/parking/${slotSelected}/availability`).then((res) => {
+        axios.put(`/parking/${slotSelected}/availability`).then((res) => {
             console.log("received successful response");
             console.log(res);
 
@@ -42,12 +49,12 @@ const BookSlot = () => {
                     <div className="inner-div">
                         {availableSlots.map((item) => (
                             <button
-                                key={item}
+                                key={item.id}
                                 type="button"
-                                onClick={() => { setSlotSelected(item); }}
-                                className={slotSelected === item ? 'slot-selected' : ''}
+                                onClick={() => { setSlotSelected(item.id); }}
+                                className={slotSelected === item.id ? 'slot-selected' : ''}
                             >
-                                {item}
+                                {item.id}
                             </button>
                         ))}
                     </div>

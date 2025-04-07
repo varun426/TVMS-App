@@ -1,37 +1,46 @@
-.navbar {
+  .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #b71c1c; /* Dark Red */
-    padding: 15px 20px;
+    padding: 10px 20px;
     color: white;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    height: 90px; /* Fixed height */
+    overflow: hidden;
+    position: relative;
   }
   
+  /* ✅ Significantly Increased Logo Size */
   .logo {
-    width: 50px;
-    height: auto;
+    max-height: 100px; /* Increased size */
+    width: auto;
+    padding-left: 10px;
+    object-fit: contain;
   }
   
+  /* ✅ Adjusted Nav Items */
   .navItems {
     list-style: none;
     display: flex;
-    gap: 20px;
-    margin-left: -100px;
+    gap: 10px; /* Proper spacing */
     align-items: center;
+    margin-left: -140px; /* Moves items further to the left */
+    padding: 0;
   }
   
+  /* Navigation Items */
   .navItems li {
     display: inline-block;
-    padding: 10px 15px;
     font-size: 16px;
-    align-items: left;
+    margin-right: 80px;
   }
   
+  /* Navigation Links */
   .navbar a {
     text-decoration: none;
     color: white;
-    padding: 8px 12px;
+    padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s ease-in-out;
   }
@@ -40,12 +49,35 @@
     background-color: #d32f2f; /* Lighter Red */
   }
   
+  /* Active Link Styling */
   .active-link {
-    background-color: #651c1c; /* Bright Red for Selected Item */
+    background-color: #651c1c; /* Darker Red */
     border-radius: 5px;
     font-weight: bold;
   }
-
-  .logo{
-    padding-left: 10px;
+  
+  /* ✅ Responsive Design */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      height: auto; /* Adjusts dynamically */
+      padding: 10px;
+    }
+  
+    .logo {
+      max-height: 85px; /* Slightly smaller for mobile */
+    }
+  
+    .navItems {
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+      width: 100%;
+      margin-left: 0; /* Center align in mobile */
+    }
+  
+    .navItems li {
+      width: 100%;
+    }
   }
+  
