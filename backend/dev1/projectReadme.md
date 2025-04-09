@@ -1,3 +1,5 @@
+Note: Check the API call limits in tomtom https://developer.tomtom.com/user/me/analytics
+
 Admin Dashboad:
 -> for this we have 3 types of windows on role basis
 

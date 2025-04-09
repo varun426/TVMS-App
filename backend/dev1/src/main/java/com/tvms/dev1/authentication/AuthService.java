@@ -4,7 +4,11 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
+import java.security.Key;
 @Service
 class AuthService {
 
@@ -29,6 +33,16 @@ class AuthService {
         return usersRepository.save(user);
     }
 
+    private String generateToken(String username, String role){
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        String jwt = Jwts.builder()
+                .setSubject(username)
+                .claim("role", role)
+                .signWith(key)
+                .compact();
+        return jwt;
+    }
+
     public Token authenticate(String username, String password){
         User userFromDb = usersRepository.getUserByUsername(username);
         if(userFromDb == null) {
@@ -41,7 +55,9 @@ class AuthService {
         if(token.getExpireTime().isAfter(LocalDateTime.now())){
             return token;
         }
-        return token;
+        String jwtToken = generateToken(userFromDb.getUsername(), userFromDb.getRole());
+        Token newToken = new Token(jwtToken,userFromDb.getUserId(),LocalDateTime.now(),LocalDateTime.now().plusHours(2));
+        return tokenRepository.save(newToken);
     }
 
 }

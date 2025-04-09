@@ -1,43 +1,46 @@
 package com.tvms.dev1.traficmonitoring;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-// import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/traffic")
+@RequestMapping("/traffic")
 public class TrafficController {
 
-    @Autowired
-    private TrafficService trafficService;
+    private final TomTomTrafficService tomTomTrafficService;
 
-    // Get all traffic data
-    @GetMapping
-    public List<TrafficData> getAllTraffic() {
-        return trafficService.getAllTrafficData();
+    public TrafficController(TomTomTrafficService tomTomTrafficService) {
+        this.tomTomTrafficService = tomTomTrafficService;
     }
 
-    // Get traffic data by location
+    // 1. Fetch Live Traffic Data & Store in DB
     @GetMapping("/location")
-    public List<TrafficData> getTrafficByLocation(@RequestParam String location) {
-        return trafficService.getTrafficByLocation(location);
+    public TrafficData getTrafficByLocation(@RequestParam double lat, @RequestParam double lon) {
+        return tomTomTrafficService.getTrafficData(lat, lon);
     }
 
-    // get by time specific for each area sample timestamp 2025-04-01 08:30:00
-    // Fix the end point as the error is with Date parsing
-    @GetMapping("/timestamp")
-    public List<TrafficData> getTrafficByTime(
-            @RequestParam LocalDateTime timestamp) {
-        return trafficService.getTrafficByTime(timestamp);
+    // 2. Fetch Past Traffic Data by Location
+    @GetMapping("/history/location")
+    public List<TrafficData> getPastTrafficByLocation(@RequestParam String location) {
+        return tomTomTrafficService.getTrafficByLocation(location);
     }
 
-    // Add traffic data
-    @PostMapping
-    public TrafficData addTrafficData(@RequestBody TrafficData trafficData) {
-        trafficData.setTimestamp(LocalDateTime.now());
-        return trafficService.saveTrafficData(trafficData);
+    // 3. Fetch Traffic Data by Time Range (-30 to +30 mins)
+    @GetMapping("/history/timestamp")
+    public List<TrafficData> getTrafficByTimestamp(@RequestParam String timestamp) {
+        LocalDateTime requestedTime = LocalDateTime.parse(timestamp);
+        LocalDateTime start = requestedTime.minusMinutes(30);
+        LocalDateTime end = requestedTime.plusMinutes(30);
+
+        return tomTomTrafficService.getTrafficByTimestampRange(start, end);
     }
+
+    // 4. Fetch All Stored Traffic Data
+    @GetMapping("/total")
+    public List<TrafficData> getAllTrafficData() {
+        return tomTomTrafficService.getAllTrafficData();
+    }
+
 }

@@ -11,6 +11,18 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tokenId;
     private String token;
+
+    public Token() {
+
+    }
+
+    public Token(String token, int userId, LocalDateTime createdTime, LocalDateTime expireTime) {
+        this.token = token;
+        this.userId = userId;
+        this.createdTime = createdTime;
+        this.expireTime = expireTime;
+    }
+
     private int userId;
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;

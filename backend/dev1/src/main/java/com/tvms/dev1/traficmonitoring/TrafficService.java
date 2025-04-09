@@ -10,7 +10,7 @@ import java.util.List;
 public class TrafficService {
 
     @Autowired
-    private TrafficRepository trafficRepository;
+    private TrafficDataRepository trafficRepository;
 
     public List<TrafficData> getAllTrafficData() {
         return trafficRepository.findAll();

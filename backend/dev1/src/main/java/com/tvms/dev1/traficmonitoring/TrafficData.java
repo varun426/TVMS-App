@@ -13,14 +13,14 @@ public class TrafficData {
     private Long id;
 
     private String location;
-    private String congestionLevel;
+    private int congestionLevel;
     private LocalDateTime timestamp;
 
     // Constructors
     public TrafficData() {
     }
 
-    public TrafficData(String location, String congestionLevel, LocalDateTime timestamp) {
+    public TrafficData(String location, int congestionLevel, LocalDateTime timestamp) {
         this.location = location;
         this.congestionLevel = congestionLevel;
         this.timestamp = timestamp;
@@ -43,11 +43,11 @@ public class TrafficData {
         this.location = location;
     }
 
-    public String getCongestionLevel() {
+    public int getCongestionLevel() {
         return congestionLevel;
     }
 
-    public void setCongestionLevel(String congestionLevel) {
+    public void setCongestionLevel(int congestionLevel) {
         this.congestionLevel = congestionLevel;
     }
 
