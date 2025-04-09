@@ -10,6 +10,10 @@ const VehicleRegulationCheck = () => {
   const [isAllowedToday, setIsAllowedToday] = useState(null);
   const [todayRule, setTodayRule] = useState("");
   const [penalties, setPenalties] = useState([]);
+  const [incidents, setIncidents] = useState([]);
+  const [hasCheckedIncidents, setHasCheckedIncidents] = useState(false);
+
+
 
 
   const getTodayRule = () => {
@@ -59,11 +63,36 @@ const VehicleRegulationCheck = () => {
       setIsAllowedToday(allowed);
       setPenalties(response.data);
       setError(null);
+
+      const incidentsResponse = [
+        {
+          "id": 1,
+          "dateTime": "2025-04-03T15:45:00",
+          "incidentType": "Speeding",
+          "vehicleNumber": "TS05CD7890"
+        },
+        {
+          "id": 2,
+          "dateTime": "2025-03-28T09:30:00",
+          "incidentType": "Signal Jump",
+          "vehicleNumber": "TS05CD7890"
+        }
+      ];      
+
+      // Fetch incidents after penalties
+      // const incidentResponse = await axios.get("/vehicle-regulation/incidents", {
+      //   params: { vehicleNumber }
+      // });
+
+      setIncidents(incidentsResponse);
+      setHasCheckedIncidents(true);
     } catch (err) {
       setError("Failed to fetch vehicle information.");
       setRuleInfo(null);
       setIsAllowedToday(null);
       setIsAllowedToday(null);
+      setPenalties([]);
+      setIncidents([]);
     }
   };
 
@@ -129,6 +158,33 @@ const VehicleRegulationCheck = () => {
             <p className="fasttag-balance">FastTag Balance: ₹{penalties[penalties.length - 1].fastTagAmount}</p>
           </div>
         )}
+
+        {hasCheckedIncidents && (
+          incidents.length > 0 ? (
+            <div className="incident-section">
+              <h4 className="incident-heading">Incident History</h4>
+              <table className="penalty-table">
+                <thead>
+                  <tr>
+                    <th>Incident Type</th>
+                    <th>Date & Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {incidents.map((incident) => (
+                    <tr key={incident.id}>
+                      <td>{incident.incidentType}</td>
+                      <td>{new Date(incident.dateTime).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="no-incidents-msg">🚗 Great drive! No incidents found.</p>
+          )
+        )}
+
 
 
         {error && (
