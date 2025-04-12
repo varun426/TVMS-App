@@ -2,6 +2,7 @@ package com.tvms.dev1.vehicleregulation;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,10 @@ class VehicleRegulation {
     // private boolean isEvenOdd;
     private int penaltyAmount;
     private String violationType;
+
+    @Column(name = "violation_time", columnDefinition = "DATETIME(6)")
     private LocalDateTime violationTime;
+
     private int fastTagAmount;
 
     public String getViolationType() {

@@ -3,6 +3,7 @@ package com.tvms.dev1.vehicleregulation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 class VehicleRegulationController {
     @Autowired
     private VehicleRegulationService service;
+
+    @Autowired
+    private IncidentRepository incidentsRepository;
 
     // Road Restriction Endpoints (Traffic administrator)
     // @PostMapping("/admin/restriction/add")
@@ -44,6 +48,12 @@ class VehicleRegulationController {
     @GetMapping("/incidents")
     public List<Incidents> getIncidents(@RequestParam String vehicleNumber) {
         return service.getIncidents(vehicleNumber);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/count-by-type")
+    public List<IncidentCountDTO> getIncidentCountsByType() {
+        return incidentsRepository.countIncidentsByType();
     }
 
 }

@@ -1,0 +1,175 @@
+import React, { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import axios from "axios";
+import './TrafficMonitoring.css';
+import Card from "./Card";
+import NavigationBar from '../NavBar/NavigationBar';
+import { Modal } from 'react-bootstrap';  // Import Modal from react-bootstrap
+
+const TrafficMonitoring = () => {
+    const [liveTraffic, setLiveTraffic] = useState([]);
+    const [historicalTraffic, setHistoricalTraffic] = useState([]);
+    const [incidentCounts, setIncidentCounts] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false); // State to control the modal
+    const [loading, setLoading] = useState(false); // State for loading
+
+    useEffect(() => {
+        fetchLiveTraffic();
+        fetchHistoricalTraffic();
+        fetchIncidentCounts();
+    }, []);
+
+    const fetchLiveTraffic = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/traffic/location");
+            setLiveTraffic(response.data);
+        } catch (error) {
+            console.error("Error fetching live traffic data", error);
+        }
+    };
+
+    const fetchHistoricalTraffic = async () => {
+        setLoading(true); // Start loading
+        try {
+            const response = await axios.get("http://localhost:8080/traffic/total");
+            setHistoricalTraffic(response.data);
+        } catch (error) {
+            console.error("Error fetching historical traffic data", error);
+        } finally {
+            setLoading(false); // End loading
+        }
+    };
+
+    const fetchIncidentCounts = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/vehicle-regulation/count-by-type");
+            setIncidentCounts(response.data);
+        } catch (error) {
+            console.error("Error fetching incident counts", error);
+        }
+    };
+
+    // Modal control functions
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    return (
+        <div>
+            <NavigationBar />
+            <div className="dashboard-container">
+                <br />
+                <div className="card map-card">
+                    <MapContainer center={[40.7128, -74.006]} zoom={12} className="map-container">
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        />
+                        {liveTraffic.map((data, index) => (
+                            <Polyline
+                                key={index}
+                                positions={data.path}
+                                color={data.congestion === "Heavy" ? "red" : "green"}
+                            />
+                        ))}
+                    </MapContainer>
+                </div>
+
+                <div className="grid-container">
+                    {/* 🚨 Incidents Card */}
+                    <div className="card">
+                        <h2 className="card-title">🚨 Incidents</h2>
+                        {Array.isArray(incidentCounts) && incidentCounts.length > 0 ? (
+                            <table className="incident-table">
+                                <thead>
+                                    <tr>
+                                        <th>Incident Type</th>
+                                        <th>Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {incidentCounts.map((incident, index) => (
+                                        <tr key={index}>
+                                            <td>{incident.incidentType}</td>
+                                            <td>{incident.count}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p>Loading incidents...</p>
+                        )}
+                    </div>
+
+                    <div className="card">
+                        <h2 className="card-title">Location-Based Insights</h2>
+                        <input className="input-field" placeholder="Enter location" />
+                        <button className="search-button">Search</button>
+                        <p className="traffic-trend">Traffic Trends: <span className="moderate">Moderate</span></p>
+                        <p>Average Travel Time: <span className="high-traffic">15 min</span></p>
+                    </div>
+
+                    {/* Historical Traffic Card with Show More Button */}
+                    <div className="card">
+                        <h2 className="card-title">Historical Traffic</h2>
+                        {loading ? (
+                            <p>Loading historical traffic data...</p>
+                        ) : (
+                            <>
+                                <ul>
+                                    {historicalTraffic.slice(0, 3).map((data, index) => (
+                                        <li key={index} className="traffic-item">
+                                            {data.location} - Congestion: {data.congestionLevel}%
+                                        </li>
+                                    ))}
+                                </ul>
+                                {historicalTraffic.length > 3 && (
+                                    <button className="show-more-button" onClick={openModal}>
+                                        Show More
+                                    </button>
+                                )}
+                            </>
+                        )}
+                    </div>
+
+                    {/* Modal for displaying entire historical traffic */}
+                    <Modal show={modalOpen} onHide={closeModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Full Historical Traffic Data</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <table className="historical-traffic-table">
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th>Congestion Level (%)</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {historicalTraffic.map((data, index) => (
+                                        <tr key={index}>
+                                            <td>{data.location}</td>
+                                            <td>{data.congestionLevel}</td>
+                                            <td>{new Date(data.timestamp).toLocaleString()}</td> {/* Format timestamp */}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button onClick={closeModal}>Close</button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default TrafficMonitoring;

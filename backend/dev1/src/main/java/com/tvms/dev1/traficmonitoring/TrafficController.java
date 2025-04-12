@@ -16,12 +16,14 @@ public class TrafficController {
     }
 
     // 1. Fetch Live Traffic Data & Store in DB
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/location")
     public TrafficData getTrafficByLocation(@RequestParam double lat, @RequestParam double lon) {
         return tomTomTrafficService.getTrafficData(lat, lon);
     }
 
     // 2. Fetch Past Traffic Data by Location
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/history/location")
     public List<TrafficData> getPastTrafficByLocation(@RequestParam String location) {
         return tomTomTrafficService.getTrafficByLocation(location);
@@ -38,6 +40,7 @@ public class TrafficController {
     }
 
     // 4. Fetch All Stored Traffic Data
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/total")
     public List<TrafficData> getAllTrafficData() {
         return tomTomTrafficService.getAllTrafficData();
