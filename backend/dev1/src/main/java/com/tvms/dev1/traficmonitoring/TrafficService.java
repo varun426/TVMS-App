@@ -29,4 +29,9 @@ public class TrafficService {
         LocalDateTime end = timestamp.plusMinutes(30);
         return trafficRepository.findByTimestampBetween(start, end);
     }
+
+    public TrafficData getTrafficByLocationName(String location) {
+        return trafficRepository.findFirstByLocationContainingIgnoreCaseOrderByTimestampDesc(location)
+                .orElseThrow(() -> new RuntimeException("Location not found: " + location));
+    }
 }

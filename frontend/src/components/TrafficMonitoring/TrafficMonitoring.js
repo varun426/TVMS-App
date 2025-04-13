@@ -13,6 +13,8 @@ const TrafficMonitoring = () => {
     const [incidentCounts, setIncidentCounts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false); // State to control the modal
     const [loading, setLoading] = useState(false); // State for loading
+    const [searchLocation, setSearchLocation] = useState("");
+    const [locationInsights, setLocationInsights] = useState(null);
 
     useEffect(() => {
         fetchLiveTraffic();
@@ -57,6 +59,37 @@ const TrafficMonitoring = () => {
 
     const closeModal = () => {
         setModalOpen(false);
+    };
+
+    const fetchLocationInsights = async () => {
+        const locationname=searchLocation.trim();
+        if (!locationname) return alert("Please enter a location name.");
+    
+        try {
+            const response = await axios.get(`http://localhost:8080/traffic/locationname?locationname=${locationname}`);
+            setLocationInsights(response.data);
+        } catch (error) {
+            console.error("Error fetching location-based data", error);
+        }
+    };
+    
+    const getTrafficTrend = (level) => {
+        if (level >= 80) return "Heavy";
+        if (level >= 40) return "Moderate";
+        return "Light";
+    };
+    
+    const getTrendColor = (level) => {
+        if (level >= 80) return "heavy";
+        if (level >= 40) return "moderate";
+        return "light";
+    };
+    
+    const calculateTravelTime = (level) => {
+        // Simulate travel time based on congestion
+        if (level >= 80) return 25;
+        if (level >= 40) return 15;
+        return 8;
     };
 
     return (
@@ -106,13 +139,40 @@ const TrafficMonitoring = () => {
                         )}
                     </div>
 
-                    <div className="card">
+                    {/* <div className="card">
                         <h2 className="card-title">Location-Based Insights</h2>
                         <input className="input-field" placeholder="Enter location" />
                         <button className="search-button">Search</button>
                         <p className="traffic-trend">Traffic Trends: <span className="moderate">Moderate</span></p>
                         <p>Average Travel Time: <span className="high-traffic">15 min</span></p>
+                    </div> */}
+                    <div className="card">
+                        <h2 className="card-title">Location-Based Insights</h2>
+                        <input
+                            className="input-field"
+                            placeholder="Enter latitude,longitude"
+                            value={searchLocation}
+                            onChange={(e) => setSearchLocation(e.target.value)}
+                        />
+                        <button className="search-button" onClick={fetchLocationInsights}>Search</button>
+                        {locationInsights && (
+                            <>
+                                <p className="traffic-trend">
+                                    Traffic Trends:{" "}
+                                    <span className={getTrendColor(locationInsights.congestionLevel)}>
+                                        {getTrafficTrend(locationInsights.congestionLevel)}
+                                    </span>
+                                </p>
+                                <p>
+                                    Average Travel Time:{" "}
+                                    <span className="high-traffic">
+                                        {calculateTravelTime(locationInsights.congestionLevel)} min
+                                    </span>
+                                </p>
+                            </>
+                        )}
                     </div>
+
 
                     {/* Historical Traffic Card with Show More Button */}
                     <div className="card">

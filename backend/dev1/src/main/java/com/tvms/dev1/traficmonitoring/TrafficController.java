@@ -1,15 +1,20 @@
 package com.tvms.dev1.traficmonitoring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/traffic")
 public class TrafficController {
 
     private final TomTomTrafficService tomTomTrafficService;
+
+    @Autowired
+    private TrafficService trafficService;
 
     public TrafficController(TomTomTrafficService tomTomTrafficService) {
         this.tomTomTrafficService = tomTomTrafficService;
@@ -46,4 +51,10 @@ public class TrafficController {
         return tomTomTrafficService.getAllTrafficData();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/locationname")
+    public TrafficData getTrafficByLocationName(@RequestParam String locationname) {
+        return trafficService.getTrafficByLocationName(locationname);
+    }
+    
 }
