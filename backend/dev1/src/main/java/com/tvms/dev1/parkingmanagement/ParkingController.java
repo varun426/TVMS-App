@@ -2,9 +2,12 @@ package com.tvms.dev1.parkingmanagement;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +24,17 @@ class ParkingController {
     private ParkingSlotService parkingSlotService;
 
     @GetMapping("/available")
-    public List<ParkingSlot> getAvailableSlots(@RequestParam String lotName) {
-        return parkingSlotService.getAvailableSlots(lotName);
+    public ResponseEntity<List<ParkingSlot>> getAvailableSlots(@RequestParam String lotName) {
+        // Fetch available slots for the given lotName
+        List<ParkingSlot> availableSlots = parkingSlotService.getAvailableSlots(lotName);
+
+        // If no available slots are found, return an appropriate response
+        if (availableSlots.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
+        }
+
+        // Return the list of available slots with 200 OK status
+        return ResponseEntity.ok(availableSlots);
     }
 
     @GetMapping("/nearby")

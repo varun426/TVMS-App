@@ -17,4 +17,7 @@ interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
     // List<ParkingSlot> findByLatitudeBetweenAndLongitudeBetween(double latMin,
     // double latMax, double lonMin,
     // double lonMax);
+
+    // Find a parking lot by its lotName
+    ParkingLot findByLotName(String lotName);
 }

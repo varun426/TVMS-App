@@ -3,13 +3,15 @@ package com.tvms.dev1.parkingmanagement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class ParkingSlotService {
+public class ParkingSlotService {
     @Autowired
     private ParkingLotRepository parkingLotRepository;
     @Autowired
@@ -19,12 +21,18 @@ class ParkingSlotService {
     private static final double MAX_DISTANCE_KM = 5;
 
     public List<ParkingSlot> getAvailableSlots(String lotName) {
-        ParkingLot parkingLot = parkingLotRepository.findIdByLotName(lotName);
-        if (parkingLot.getId() == 0) {
-            return new ArrayList<ParkingSlot>();
+        // Fetch the ParkingLot object based on lotName
+        ParkingLot parkingLot = parkingLotRepository.findByLotName(lotName);
+
+        // If no ParkingLot is found for the given lotName, return an empty list
+        if (parkingLot == null) {
+            return new ArrayList<>();
         }
+
+        // Fetch available parking slots for the parking lot's ID
         return parkingSlotRepository.findByIsAvailableAndLotId(true, parkingLot.getId());
     }
+    
 
     // public List<ParkingSlot> findNearbySlots(double latitude, double longitude) {
     // double range = 0.002; // Approx. 200m range
@@ -93,5 +101,15 @@ class ParkingSlotService {
             return parkingSlotRepository.save(slot);
         }
         throw new RuntimeException("Parking slot with ID " + id + " not found.");
+    }
+
+    public Map<LocalDateTime, Integer> findSlotsByTime(LocalDateTime startTime, LocalDateTime endTime) {
+        List<ParkingSlot> parkingDetails = parkingSlotRepository.findByDateTimeBetween(startTime, endTime);
+
+        Map<LocalDateTime, Integer> countByDateTime = parkingDetails.stream()
+                .collect(Collectors.groupingBy(
+                        ParkingSlot::getDateTime,
+                        Collectors.collectingAndThen(Collectors.counting(), Long::intValue)));
+        return countByDateTime;
     }
 }

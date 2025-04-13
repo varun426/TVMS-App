@@ -19,6 +19,45 @@
     justify-content: center;
 }
 
-.slot-selected {
-    background-color: red;
+/* Default slot button styling */
+.slot-button {
+    background-color: rgb(195, 223, 195);
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Add this line for curved borders */
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Style for available (light red) slots */
+.slot-available {
+    background-color: rgb(227, 202, 202);  /* Light red */
+}
+
+/* Style for selected slot (red) */
+.slot-selected {
+    background-color: #dc3545; /* Red */
+    color: #fff;  /* White text for selected slot */
+}
+
+/* Style for booked (gray) slots */
+.slot-booked {
+    background-color: #d3d3d3; /* Gray */
+    color: #888;  /* Lighter text */
+    cursor: not-allowed; /* Show a not-allowed cursor */
+}
+
+/* Styling for disabled button (for booked slots) */
+.slot-button:disabled {
+    background-color: #d3d3d3; /* Gray */
+    cursor: not-allowed;
+}
+
+/* Styling for the book slot button */
+.book-slot-button button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
