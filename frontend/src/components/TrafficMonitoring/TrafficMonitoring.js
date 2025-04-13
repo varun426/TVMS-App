@@ -61,6 +61,7 @@ const TrafficMonitoring = () => {
         setModalOpen(false);
     };
 
+    // Fetches the latest traffic record where the location contains the given keyword, ignoring case.
     const fetchLocationInsights = async () => {
         const locationname=searchLocation.trim();
         if (!locationname) return alert("Please enter a location name.");

@@ -13,6 +13,7 @@ public interface TrafficDataRepository extends JpaRepository<TrafficData, Long> 
 
     List<TrafficData> findByTimestampBetween(LocalDateTime start, LocalDateTime end);
 
+    // Fetches the latest traffic record where the location contains the given keyword, ignoring case.
     Optional<TrafficData> findFirstByLocationContainingIgnoreCaseOrderByTimestampDesc(String location);
 
 
