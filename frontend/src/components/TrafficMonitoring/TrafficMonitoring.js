@@ -5,41 +5,42 @@ import axios from "axios";
 import './TrafficMonitoring.css';
 import Card from "./Card";
 import NavigationBar from '../NavBar/NavigationBar';
-import { Modal } from 'react-bootstrap';  // Import Modal from react-bootstrap
+import { Modal } from 'react-bootstrap';
 
 const TrafficMonitoring = () => {
-    const [liveTraffic, setLiveTraffic] = useState([]);
+    const [liveTraffic, setLiveTraffic] = useState(null); // State is now an object, not an array
     const [historicalTraffic, setHistoricalTraffic] = useState([]);
     const [incidentCounts, setIncidentCounts] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false); // State to control the modal
-    const [loading, setLoading] = useState(false); // State for loading
+    const [modalOpen, setModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [searchLocation, setSearchLocation] = useState("");
     const [locationInsights, setLocationInsights] = useState(null);
 
     useEffect(() => {
-        fetchLiveTraffic();
+        getUserLocation(); // Get the user's current location on mount
         fetchHistoricalTraffic();
         fetchIncidentCounts();
     }, []);
 
-    const fetchLiveTraffic = async () => {
+    const fetchLiveTraffic = async (lat, lon) => {
         try {
-            const response = await axios.get("http://localhost:8080/traffic/location");
-            setLiveTraffic(response.data);
+            const response = await axios.get(`http://localhost:8080/traffic/location?lat=${lat}&lon=${lon}`);
+            setLiveTraffic(response.data); // Store the response as an object
         } catch (error) {
             console.error("Error fetching live traffic data", error);
+            setLiveTraffic(null); // Reset the state if an error occurs
         }
     };
 
     const fetchHistoricalTraffic = async () => {
-        setLoading(true); // Start loading
+        setLoading(true);
         try {
             const response = await axios.get("http://localhost:8080/traffic/total");
             setHistoricalTraffic(response.data);
         } catch (error) {
             console.error("Error fetching historical traffic data", error);
         } finally {
-            setLoading(false); // End loading
+            setLoading(false);
         }
     };
 
@@ -52,20 +53,11 @@ const TrafficMonitoring = () => {
         }
     };
 
-    // Modal control functions
-    const openModal = () => {
-        setModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setModalOpen(false);
-    };
-
-    // Fetches the latest traffic record where the location contains the given keyword, ignoring case.
+    // Fetches the latest traffic record where the location contains the given keyword
     const fetchLocationInsights = async () => {
-        const locationname=searchLocation.trim();
+        const locationname = searchLocation.trim();
         if (!locationname) return alert("Please enter a location name.");
-    
+
         try {
             const response = await axios.get(`http://localhost:8080/traffic/locationname?locationname=${locationname}`);
             setLocationInsights(response.data);
@@ -73,19 +65,29 @@ const TrafficMonitoring = () => {
             console.error("Error fetching location-based data", error);
         }
     };
-    
+
+    const getUserLocation = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            fetchLiveTraffic(latitude, longitude); // Fetch traffic data for the user's location
+        }, (error) => {
+            console.error("Error getting user location", error);
+            alert("Failed to get your location.");
+        });
+    };
+
     const getTrafficTrend = (level) => {
         if (level >= 80) return "Heavy";
         if (level >= 40) return "Moderate";
         return "Light";
     };
-    
+
     const getTrendColor = (level) => {
         if (level >= 80) return "heavy";
         if (level >= 40) return "moderate";
         return "light";
     };
-    
+
     const calculateTravelTime = (level) => {
         // Simulate travel time based on congestion
         if (level >= 80) return 25;
@@ -99,23 +101,24 @@ const TrafficMonitoring = () => {
             <div className="dashboard-container">
                 <br />
                 <div className="card map-card">
-                    <MapContainer center={[40.7128, -74.006]} zoom={12} className="map-container">
+                    <MapContainer center={[17.385044, 78.486671]} zoom={12} className="map-container">
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         />
-                        {liveTraffic.map((data, index) => (
+                        {/* Check if liveTraffic is not null and contains the location and congestionLevel */}
+                        {liveTraffic && liveTraffic.lat && liveTraffic.lon && liveTraffic.congestionLevel && (
                             <Polyline
-                                key={index}
-                                positions={data.path}
-                                color={data.congestion === "Heavy" ? "red" : "green"}
+                                positions={[[liveTraffic.lat, liveTraffic.lon]]} // Make sure lat and lon are valid
+                                color={liveTraffic.congestionLevel >= 80 ? "red" : "green"}
                             />
-                        ))}
+                        )}
+
+
                     </MapContainer>
                 </div>
 
                 <div className="grid-container">
-                    {/* 🚨 Incidents Card */}
                     <div className="card">
                         <h2 className="card-title">🚨 Incidents</h2>
                         {Array.isArray(incidentCounts) && incidentCounts.length > 0 ? (
@@ -190,7 +193,7 @@ const TrafficMonitoring = () => {
                                     ))}
                                 </ul>
                                 {historicalTraffic.length > 3 && (
-                                    <button className="show-more-button" onClick={openModal}>
+                                    <button className="show-more-button" onClick={() => setModalOpen(true)}>
                                         Show More
                                     </button>
                                 )}
@@ -198,8 +201,7 @@ const TrafficMonitoring = () => {
                         )}
                     </div>
 
-                    {/* Modal for displaying entire historical traffic */}
-                    <Modal show={modalOpen} onHide={closeModal}>
+                    <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
                         <Modal.Header closeButton>
                             <Modal.Title>Full Historical Traffic Data</Modal.Title>
                         </Modal.Header>
@@ -224,7 +226,7 @@ const TrafficMonitoring = () => {
                             </table>
                         </Modal.Body>
                         <Modal.Footer>
-                            <button onClick={closeModal}>Close</button>
+                            <button onClick={() => setModalOpen(false)}>Close</button>
                         </Modal.Footer>
                     </Modal>
                 </div>
