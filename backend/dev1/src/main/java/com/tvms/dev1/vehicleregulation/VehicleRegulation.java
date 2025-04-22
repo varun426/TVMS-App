@@ -9,7 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-class VehicleRegulation {
+public class VehicleRegulation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

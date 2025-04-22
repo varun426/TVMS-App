@@ -15,10 +15,20 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", credentials);
+      // Send POST request to the backend
+      const response = await axios.post("http://localhost:8080/auth/login", credentials, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      // If login is successful, save the token to localStorage
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+
+      // Redirect user to the dashboard
+      navigate("/parking-management");
     } catch (err) {
+      console.error(err);
       setError("Invalid username or password");
     }
   };
@@ -28,8 +38,20 @@ const Login = () => {
       <h2>Login</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Login</button>
       </form>
       <p>New user? <a href="/register">Register</a></p>

@@ -1,45 +1,62 @@
 .auth-container {
-    width: 400px; /* Increased width */
-    min-height: 450px; /* Increased height */
-    margin: auto;
-    margin-top: 100px;
-    padding: 30px; /* Increased padding */
-    text-align: center;
-    background: #f8f8f8;
-    border-radius: 12px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Ensures content stays centered */
+  width: 400px;
+  min-height: 450px;
+  margin: auto;
+  margin-top: 100px;
+  padding: 30px;
+  text-align: center;
+  background: #f8f8f8;
+  border-radius: 12px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-  
-  .auth-container h2 {
-    color: #333;
-  }
-  
-  .auth-container input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .auth-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #b71c1c;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .auth-container button:hover {
-    background-color: #d32f2f;
-  }
-  
-  .auth-container .error {
-    color: red;
-  }
-  
+
+.auth-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.auth-container input,
+.auth-container select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #b71c1c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.auth-container button:hover {
+  background-color: #d32f2f;
+}
+
+.auth-container .error {
+  color: red;
+  margin-top: 10px;
+}
+
+.auth-container a {
+  color: #b71c1c;
+  text-decoration: none;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}

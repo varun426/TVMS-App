@@ -43,21 +43,27 @@ class AuthService {
         return jwt;
     }
 
-    public Token authenticate(String username, String password){
+    public Token authenticate(String username, String password) {
         User userFromDb = usersRepository.getUserByUsername(username);
         if(userFromDb == null) {
             throw new RuntimeException("User with name " + username + " is not registered.");
         }
-        if(!userFromDb.getPassword().equals(password)){
+        if(!userFromDb.getPassword().equals(password)) {
             throw new RuntimeException("Invalid Login Credentials.");
         }
+    
         Token token = tokenRepository.getTokenByUserId(userFromDb.getUserId());
-        if(token.getExpireTime().isAfter(LocalDateTime.now())){
-            return token;
+        
+        // Check if token is null
+        if (token != null) {
+            if (token.getExpireTime().isAfter(LocalDateTime.now())) {
+                return token;
+            }
         }
+    
+        // If no valid token, generate a new one
         String jwtToken = generateToken(userFromDb.getUsername(), userFromDb.getRole());
-        Token newToken = new Token(jwtToken,userFromDb.getUserId(),LocalDateTime.now(),LocalDateTime.now().plusHours(2));
+        Token newToken = new Token(jwtToken, userFromDb.getUserId(), LocalDateTime.now(), LocalDateTime.now().plusHours(2));
         return tokenRepository.save(newToken);
     }
-
 }

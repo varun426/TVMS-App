@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './Auth.css';
 
 const Register = () => {
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState({ username: "", password: "", role: "COMMUTER" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -27,8 +27,25 @@ const Register = () => {
       <h2>Register</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+        <select name="role" value={user.role} onChange={handleChange} required>
+          <option value="COMMUTER">Commuter</option>
+          <option value="TRAFFIC_REGULATOR">Traffic Regulator</option>
+          <option value="PARKING_ADMINISTRATOR">Parking Administrator</option>
+        </select>
         <button type="submit">Register</button>
       </form>
       <p>Already registered? <a href="/login">Login</a></p>
