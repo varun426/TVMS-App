@@ -154,7 +154,7 @@ const TrafficMonitoring = () => {
                         <h2 className="card-title">Location-Based Insights</h2>
                         <input
                             className="input-field"
-                            placeholder="Enter latitude,longitude"
+                            placeholder="Enter location"
                             value={searchLocation}
                             onChange={(e) => setSearchLocation(e.target.value)}
                         />
