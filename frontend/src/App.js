@@ -7,6 +7,7 @@ import BookSlot from './components/BookSlot/BookSlot';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import TrafficMonitoring from './components/TrafficMonitoring/TrafficMonitoring';
+import OccupancyStats from './components/Dashboard/OccupancyStats';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PrivateRoute from './components/PrivateRoute';  // Ensure this import path is correct
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/vehicle-regulation" element={<PrivateRoute element={VehicleRegulationCheck} />} />
         <Route path="/available" element={<PrivateRoute element={BookSlot} />} />
         <Route path="/traffic" element={<PrivateRoute element={TrafficMonitoring} />} />
+        <Route path="/dashboard" element={<PrivateRoute element={OccupancyStats} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -10,7 +10,7 @@ const NavigationBar = () => {
       <img src="/assets/log_v1-removebg-preview.png" alt="TVMS Logo" className="logo" />
       <ul className="navItems">
         <li>
-          <NavLink to="https://www.youtube.com/watch?v=m55PTVUrlnA" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink>
+          <NavLink to="/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink>
         </li>
         <li>
           <NavLink to="/parking-management" className={({ isActive }) => isActive ? "active-link" : ""}>Parking Management</NavLink>

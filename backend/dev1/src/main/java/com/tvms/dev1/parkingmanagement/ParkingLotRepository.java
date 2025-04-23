@@ -1,17 +1,18 @@
 package com.tvms.dev1.parkingmanagement;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
+public interface ParkingLotRepository extends JpaRepository<ParkingLot, Long> {
 
     ParkingLot findIdByLotName(String lotName);
 
+    // Find a lot by latitude and longitude
     Long findIdByLatitudeAndLongitude(Long latitude, Long longitude);
 
+    // Find all lots by availability status
     List<ParkingLot> findByAvailable(Boolean available);
 
     // List<ParkingSlot> findByLatitudeBetweenAndLongitudeBetween(double latMin,

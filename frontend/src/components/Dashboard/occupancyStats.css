@@ -1,0 +1,98 @@
+/* Occupancy Stats Container */
+.occupancy-stats-container {
+    background-color: #ffffff;
+    padding: 30px; /* Padding for better spacing */
+    margin-top: 80px; /* Space for the fixed navbar */
+    width: 50vw; /* Increased width to 35% of viewport width */
+    height: 50vh; /* 50% of viewport height */
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    text-align: center;
+    margin-left: 20px; /* Keeps it slightly from the left edge */
+  }
+  
+  /* Heading Style */
+  .occupancy-stats-container h2 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+  
+  /* Grid Layout for Occupancy Cards */
+  .occupancy-stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  /* Occupancy Card Styles */
+  .occupancy-card {
+    background-color: #ffffff;
+    padding: 25px; /* Increased padding for cards */
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    width: 220px; /* Card width */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .occupancy-card h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .pie-chart {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .occupancy-text {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+  }
+
+  /* Occupancy Card Styles */
+.occupancy-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    width: 240px; /* Slightly increased width */
+    text-align: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+  
+  /* Title Styling inside the Card */
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+    padding: 0 10px; /* Padding for long names */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-title:hover {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    background: #f9f9f9;
+    z-index: 10;
+    position: relative;
+    padding: 4px;
+    border-radius: 6px;
+  }  
+  
