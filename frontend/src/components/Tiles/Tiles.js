@@ -25,7 +25,7 @@ const content = [
 const Tiles = () => {
     const navigate = useNavigate();
     const checkAvailability = (lotName) => {
-        lotName = lotName.replace(" ", "_");
+        lotName = lotName.replaceAll(" ", "_");
         navigate('/available',
             {
                 state: {
