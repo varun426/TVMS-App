@@ -37,7 +37,22 @@ const NavigationBar = () => {
     <div className="navbar">
       <img src="/assets/log_v1-removebg-preview.png" alt="TVMS Logo" className="logo" />
       <ul className="navItems">
-        <li><NavLink to="/parking-management" className={({ isActive }) => isActive ? "active-link" : ""}>Parking Management</NavLink></li>
+        {/* <li><NavLink to="/parking-management" className={({ isActive }) => isActive ? "active-link" : ""}>Parking Management</NavLink></li> */}
+        <li>
+          <NavLink
+            to="/parking-management"
+            className={() =>
+              window.location.pathname.startsWith("/parking-management") ||
+              window.location.pathname === "/available" ||
+              window.location.pathname === "/occupancy" ||
+              window.location.pathname === "/slots"
+                ? "active-link"
+                : ""
+            }
+          >
+            Parking Management
+          </NavLink>
+        </li>
         <li><NavLink to="/vehicle-regulation" className={({ isActive }) => isActive ? "active-link" : ""}>Vehicle Regulation</NavLink></li>
         <li><NavLink to="/traffic" className={({ isActive }) => isActive ? "active-link" : ""}>Traffic Monitoring</NavLink></li>
         <li><NavLink to="/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>Dashboard</NavLink></li>
