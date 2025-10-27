@@ -20,16 +20,7 @@ public class DashboardController {
     @Autowired
     private ParkingSlotService parkingSlotService;
 
-    // @GetMapping("/violations/{startTime}/{endTime}")
-    // public Map<String, Integer> getViolationDetails(@PathVariable LocalDateTime startTime,
-    //         @PathVariable LocalDateTime endTime) {
-    //     System.out.println(startTime.toString() + "::" + endTime.toString());
-    //     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-    //     formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    //     // LocalDateTime start = LocalDateTime.parse(startTime, formatter);
-    //     // LocalDateTime end = LocalDateTime.parse(endTime, formatter);
-    //     return vehicleRegulationService.getViolationsByTime(startTime, endTime);
-    // }
+
 
     @GetMapping("/violations/{startTime}/{endTime}")
     public Map<String, Integer> getViolationDetails(
